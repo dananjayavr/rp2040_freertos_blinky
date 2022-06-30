@@ -15,12 +15,12 @@ void led_task(void *pvParameters) {
     while(1) {
         gpio_put(LED_PIN,1);
         uIValueToSend = 1;
-        xQueueSend(&xQueue,&uIValueToSend,0U);
+        xQueueSend(xQueue,&uIValueToSend,0U);
 
         vTaskDelay(100);
         gpio_put(LED_PIN, 0);
         uIValueToSend = 0;
-        xQueueSend(&xQueue,&uIValueToSend,0U);
+        xQueueSend(xQueue,&uIValueToSend,0U);
 
         vTaskDelay(100);
     }
@@ -30,7 +30,7 @@ void usb_task(void *pvParameters) {
     uint uIReceivedValue;
 
     while(1) {
-        xQueueReceive(&xQueue,&uIReceivedValue,portMAX_DELAY);
+        xQueueReceive(xQueue,&uIReceivedValue,portMAX_DELAY);
 
         if(uIReceivedValue == 1) {
             printf("LED is ON!\r\n");
